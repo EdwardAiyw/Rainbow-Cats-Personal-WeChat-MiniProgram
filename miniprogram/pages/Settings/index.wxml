@@ -1,0 +1,9 @@
+<view class="page settings-page">
+  <view class="page-heading">设置</view>
+  <view class="muted">管理当前用户在这个双人空间中的资料。</view>
+  <view class="card danger-card">
+    <view class="heading">删除用户</view>
+    <view class="status-message">删除后将不再保留你的昵称、积分、成员资料，以及你创建或拥有的心愿、礼物和收藏记录。此操作无法恢复。</view>
+    <button class="danger-button" loading="{{deleting}}" disabled="{{deleting}}" bindtap="deleteUser">删除我的用户资料</button>
+  </view>
+</view>

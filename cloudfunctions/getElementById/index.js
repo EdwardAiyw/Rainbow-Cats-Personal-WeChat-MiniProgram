@@ -8,8 +8,13 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async (context) => {
-  // 根据待办的 _id 找到并返回
-  return await db.collection(context.list).where({
-    _id: context._id
-  }).get()
+  const allowed = ['MissionList', 'MarketList', 'StorageList', 'RecipeList']
+  if (!allowed.includes(context.list)) return { error: '不支持的数据集合' }
+  const openId = cloud.getWXContext().OPENID
+  const member = await db.collection('Memberships').where({ _openid: openId }).limit(1).get()
+  if (!member.data.length) return { error: '请先创建或加入双人空间' }
+  const where = { _id: context._id, spaceId: member.data[0].spaceId }
+  if (context.list === 'StorageList') where._openid = openId
+  const result = await db.collection(context.list).where(where).limit(1).get()
+  return { data: result.data }
 }

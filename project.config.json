@@ -1,65 +1,163 @@
 {
-    "description": "项目配置文件，详见文档：https://developers.weixin.qq.com/miniprogram/dev/devtools/projectconfig.html",
-    "packOptions": {
-        "ignore": [],
-        "include": []
+  "miniprogramRoot": "miniprogram/",
+  "cloudfunctionRoot": "cloudfunctions/",
+  "setting": {
+    "urlCheck": true,
+    "es6": true,
+    "enhance": true,
+    "postcss": true,
+    "preloadBackgroundData": false,
+    "minified": true,
+    "newFeature": true,
+    "coverView": true,
+    "nodeModules": false,
+    "autoAudits": false,
+    "showShadowRootInWxmlPanel": true,
+    "scopeDataCheck": false,
+    "uglifyFileName": false,
+    "checkInvalidKey": true,
+    "checkSiteMap": true,
+    "uploadWithSourceMap": true,
+    "compileHotReLoad": false,
+    "useMultiFrameRuntime": true,
+    "useApiHook": true,
+    "useApiHostProcess": true,
+    "babelSetting": {
+      "ignore": [],
+      "disablePlugins": [],
+      "outputPath": ""
     },
-    "setting": {
-        "urlCheck": true,
-        "es6": false,
-        "enhance": true,
-        "postcss": true,
-        "preloadBackgroundData": false,
-        "minified": true,
-        "newFeature": false,
-        "coverView": true,
-        "nodeModules": false,
-        "autoAudits": false,
-        "showShadowRootInWxmlPanel": true,
-        "scopeDataCheck": false,
-        "uglifyFileName": false,
-        "checkInvalidKey": true,
-        "checkSiteMap": true,
-        "uploadWithSourceMap": true,
-        "compileHotReLoad": false,
-        "lazyloadPlaceholderEnable": false,
-        "useMultiFrameRuntime": true,
-        "useApiHook": true,
-        "useApiHostProcess": true,
-        "babelSetting": {
-            "ignore": [],
-            "disablePlugins": [],
-            "outputPath": ""
-        },
-        "useIsolateContext": true,
-        "userConfirmedBundleSwitch": false,
-        "packNpmManually": false,
-        "packNpmRelationList": [],
-        "minifyWXSS": true,
-        "disableUseStrict": false,
-        "minifyWXML": true,
-        "showES6CompileOption": false,
-        "useCompilerPlugins": false,
-        "ignoreUploadUnusedFiles": true,
-        "useStaticServer": true,
-        "compileWorklet": false,
-        "localPlugins": false,
-        "condition": false,
-        "swc": false,
-        "disableSWC": true
+    "enableEngineNative": false,
+    "useIsolateContext": true,
+    "useCompilerModule": true,
+    "userConfirmedUseCompilerModuleSwitch": false,
+    "userConfirmedBundleSwitch": false,
+    "packNpmManually": false,
+    "packNpmRelationList": [],
+    "minifyWXSS": true,
+    "compileWorklet": false,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true,
+    "ignoreUploadUnusedFiles": true
+  },
+  "appid": "wx4afe51156003c210",
+  "projectname": "quickstart-wx-cloud",
+  "libVersion": "2.20.1",
+  "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
+  "condition": {
+    "search": {
+      "list": []
     },
-    "compileType": "miniprogram",
-    "libVersion": "2.14.1",
-    "appid": "wx4afe51156003c210",
-    "projectname": "DailyMissions",
-    "miniprogramRoot": "miniprogram/",
-    "cloudfunctionRoot": "cloudfunctions/",
-    "cloudfunctionTemplateRoot": "cloudfunctionTemplate/",
-    "condition": {},
-    "srcMiniprogramRoot": "miniprogram/",
-    "editorSetting": {
-        "tabIndent": "insertSpaces",
-        "tabSize": 4
+    "conversation": {
+      "list": []
     },
-    "simulatorPluginLibVersion": {}
+    "plugin": {
+      "list": []
+    },
+    "game": {
+      "list": []
+    },
+    "miniprogram": {
+      "list": [
+        {
+          "id": -1,
+          "name": "db guide",
+          "pathName": "pages/databaseGuide/databaseGuide"
+        }
+      ]
+    }
+  },
+  "compileType": "miniprogram",
+  "srcMiniprogramRoot": "miniprogram/",
+  "packOptions": {
+    "ignore": [
+      {
+        "value": "miniprogram/node_modules/**/*",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/components/**/*",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/pages/index/**/*",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/pages/example/**/*",
+        "type": "folder"
+      },
+      {
+        "value": "miniprogram/images/create_cbr.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/create_cbrf.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/ai_example1.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/ai_example2.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/env-select.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/default-goods-image.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/database.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/create_env.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/function_deploy.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/database_add.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/scf-enter.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/cloud_dev.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/avatar.png",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/arrow.svg",
+        "type": "file"
+      },
+      {
+        "value": "miniprogram/images/copy.svg",
+        "type": "file"
+      }
+    ],
+    "include": []
+  },
+  "editorSetting": {
+    "tabIndent": "insertSpaces",
+    "tabSize": 2
+  },
+  "simulatorPluginLibVersion": {}
 }

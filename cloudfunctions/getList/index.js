@@ -7,6 +7,8 @@ cloud.init({ // 初始化云开发环境
 const db = cloud.database()
 
 // 云函数入口函数
-exports.main = async (context) => {
-  return await db.collection(context.list).get()
+exports.main = async () => {
+  // Kept so deploying all historical folders cannot expose every collection.
+  // V2 clients use listElements, which scopes records to the caller's space.
+  return { error: '此云函数已废弃，请使用 listElements' }
 }

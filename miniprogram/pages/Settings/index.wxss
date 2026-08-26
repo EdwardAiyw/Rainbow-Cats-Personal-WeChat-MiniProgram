@@ -1,0 +1,1 @@
+.settings-page { padding-top: 40rpx; }.danger-card { border-color: #ffc8d0; background: #fffafb; }.danger-card .heading { color: #c43e58; }.danger-card .status-message { margin-bottom: 28rpx; }.danger-button { background: #fff0f2; color: #d84b62; border: 1rpx solid #ffc8d0; }

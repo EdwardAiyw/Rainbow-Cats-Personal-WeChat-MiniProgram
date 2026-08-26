@@ -1,0 +1,23 @@
+<view class="container">
+  <view class="page-heading">{{copy.pageTitle}}</view>
+  <view class="muted">{{copy.hint}}</view>
+  <view class="card">
+    <view class="form-label">{{copy.preset}}</view>
+    <picker mode="selector" bindchange="onPresetChange" value="{{presetIndex}}" range="{{presets}}" range-key="name"><view class="input">{{presets[presetIndex].name}}</view></picker>
+    <view class="form-label">{{copy.title}}</view>
+    <input type="text" cursor-spacing="20" maxlength="16" placeholder="{{titlePlaceholder}}" placeholder-class="input-placeholder" bindinput="onTitleInput" value="{{title}}" />
+    <view class="form-label">{{copy.desc}}</view>
+    <input type="text" cursor-spacing="20" maxlength="80" placeholder="{{descPlaceholder}}" placeholder-class="input-placeholder" bindinput="onDescInput" value="{{desc}}" />
+    <view class="form-label">{{copy.ingredients}}</view>
+    <textarea cursor-spacing="20" maxlength="200" placeholder="{{ingredientsPlaceholder}}" placeholder-class="input-placeholder" bindinput="onIngredientsInput" value="{{ingredients}}" />
+    <view class="form-label">{{copy.steps}}</view>
+    <textarea cursor-spacing="20" maxlength="500" placeholder="{{stepsPlaceholder}}" placeholder-class="input-placeholder" bindinput="onStepsInput" value="{{steps}}" />
+    <view class="form-label">{{copy.flavor}}</view>
+    <picker mode="selector" bindchange="onFlavorChange" range="{{flavorOptions}}"><view class="input">{{flavor}}</view></picker>
+    <view class="form-label">{{copy.difficulty}}</view>
+    <picker mode="selector" bindchange="onDifficultyChange" range="{{difficultyOptions}}"><view class="input">{{difficulty}}</view></picker>
+    <view class="form-label">{{copy.minutes}}：{{minutes}} 分钟</view>
+    <slider min="1" max="180" value="{{minutes}}" activeColor="#ff4e76" bindchange="onMinutesInput" show-value />
+  </view>
+  <view class="footer"><view class="reset" bindtap="resetRecipe">{{copy.reset}}</view><view class="save" bindtap="saveRecipe">{{submitting ? '...' : copy.save}}</view></view>
+</view>

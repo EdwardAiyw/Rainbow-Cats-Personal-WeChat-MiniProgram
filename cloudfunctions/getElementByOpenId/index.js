@@ -7,9 +7,7 @@ cloud.init({ // 初始化云开发环境
 const db = cloud.database()
 
 // 云函数入口函数
-exports.main = async (context) => {
-  // 根据待办的 _openid 找到并返回
-  return await db.collection(context.list).where({
-    _openid: context._openid
-  }).get()
+exports.main = async () => {
+  // A caller must never be able to enumerate another user's records by openid.
+  return { error: '此云函数已废弃，请使用 getCurrentSpace 或 listElements' }
 }

@@ -1,52 +1,19 @@
-// 云函数入口文件
 const cloud = require('wx-server-sdk')
-cloud.init()
+const config = require('./notification.config.js')
+cloud.init({ env: cloud.DYNAMIC_CURRENT_ENV })
+const db = cloud.database()
 
-exports.main = async (event, context) => {
-  try {
-    console.log("Sending message with event data:", event);
-
-    let openid = cloud.getWXContext().OPENID;  // 获取用户的openid
-    console.log(openid);
-    if (openid === '这里改成A的openid') {//_openidA放到单引号里
-        openid = '这里改成B的openid';//_openidB放到单引号
-    } else {
-        openid = '这里改成A的openid';//_openidA放到单引号里
-    }
-
-
-
-    let taskName = '叮咚～任务更新提醒'
-    // 获取发布任务最后一条信息进行推送
-    await cloud.callFunction({ name: 'getList', data: { list: 'MissionList' } }).then(res => {
-        const { data } = res.result
-        const task = data.filter(task => task._openid == openid)
-        if (task.length) {
-            taskName = task[task.length - 1].title
-        }
-    })
-
-    const result = await cloud.openapi.subscribeMessage.send({
-      touser: openid, // 发送通知给谁的openid(把上面挑好就行，这块不用动)
-      data: {
-        thing6: {
-          value: taskName
-        },
-        thing9: {
-          value: '你的宝r在努力学习哦'
-        }
-      },
-      
-      templateId: event.templateId, // 模板ID
-      miniprogramState: 'developer',
-      page: 'pages/MainPage/index' // 这个是发送完服务通知用户点击消息后跳转的页面
-    })
-    console.log("Sending message with event data:", event);
-
-    console.log("Message sent successfully:", result);
-    return event.startdate
-  } catch (err) {
-    console.log("Error while sending message:", err);
-    return err
-  }
+exports.main = async (event) => {
+  if (!config.templateId) return { skipped: true, reason: '未配置订阅消息模板' }
+  const openId = cloud.getWXContext().OPENID
+  const mission = await db.collection('MissionList').doc(event.missionId).get()
+  if (!mission.data || mission.data._openid !== openId) return { error: '无权发送该任务通知' }
+  const members = await db.collection('Memberships').where({ spaceId: mission.data.spaceId }).get()
+  const partner = members.data.find(item => item._openid !== openId)
+  if (!partner) return { skipped: true, reason: '尚未有另一位成员' }
+  const data = {}
+  data[config.taskField] = { value: String(mission.data.title).slice(0, 20) }
+  data[config.noteField] = { value: String(config.note || '').slice(0, 20) }
+  await cloud.openapi.subscribeMessage.send({ touser: partner._openid, templateId: config.templateId, data, miniprogramState: config.miniprogramState || 'developer', page: 'pages/Mission/index' })
+  return { ok: true }
 }

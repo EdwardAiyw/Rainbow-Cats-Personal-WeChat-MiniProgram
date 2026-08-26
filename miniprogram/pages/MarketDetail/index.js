@@ -1,59 +1,7 @@
+const { call } = require('../../utils/cloud')
 Page({
-  // 保存商品的 _id 和详细信息
-  data: {
-    _id: '',
-    item: null,
-    dateStr: '',
-    timeStr: '',
-    creditPercent: 0,
-    from: '',
-    to: '',
-    maxCredit: getApp().globalData.maxCredit,
-    list: getApp().globalData.collectionMarketList,
-  },
-
-  onLoad(options) {
-    // 保存上一页传来的 _id 字段，用于查询商品
-    if (options.id !== undefined) {
-      this.setData({
-        _id: options.id
-      })
-    }
-  },
-  
-  getDate(dateStr){
-    const milliseconds = Date.parse(dateStr)
-    const date = new Date()
-    date.setTime(milliseconds)
-    return date
-  },
-
-  // 根据 _id 值查询并显示商品
-  async onShow() {
-    if (this.data._id.length > 0) {
-      // 根据 _id 拿到商品
-      await wx.cloud.callFunction({name: 'getElementById', data: this.data}).then(data => {
-        // 将商品保存到本地，更新显示
-        this.setData({
-          item: data.result.data[0],
-          dateStr: this.getDate(data.result.data[0].date).toDateString(),
-          timeStr: this.getDate(data.result.data[0].date).toTimeString(),
-          creditPercent: (data.result.data[0].credit / getApp().globalData.maxCredit) * 100,
-        })
-
-        //确定商品关系并保存到本地
-        if(this.data.item._openid === getApp().globalData._openidA){
-          this.setData({
-            from: getApp().globalData.userA,
-            to: getApp().globalData.userB,
-          })
-        }else if(this.data.item._openid === getApp().globalData._openidB){
-          this.setData({
-            from: getApp().globalData.userB,
-            to: getApp().globalData.userA,
-          })
-        }
-      })
-    }
-  },
+  data: { _id: '', item: null, dateStr: '', timeStr: '', creditPercent: 0, from: '', to: '', maxCredit: getApp().globalData.maxCredit,
+    copy: { pageTitle: '\u793c\u7269\u8be6\u60c5', title: '\u793c\u7269\u540d\u79f0', relation: '\u5151\u6362\u5173\u7cfb', value: '\u793c\u7269\u4ef7\u503c', maximum: '\u6700\u9ad8', createdAt: '\u521b\u5efa\u65f6\u95f4', detail: '\u793c\u7269\u8bf4\u660e', notFound: '\u627e\u4e0d\u5230\u8fd9\u4efd\u793c\u7269', listed: '\u4e0a\u67b6\uff0c\u7531', exchange: '\u5151\u6362', point: '\u5206' } },
+  onLoad(o) { if (o.id) this.setData({ _id: o.id }) },
+  async onShow() { if (!this.data._id) return; try { const [result, state] = await Promise.all([call('getElementById', { _id: this.data._id, list: 'MarketList' }), call('getCurrentSpace')]); const item = result.data && result.data[0]; if (!item) throw new Error('礼物不存在'); const members = state.members || []; const from = (members.find(x => x._openid === item._openid) || {}).displayName || '搭档'; const to = (members.find(x => x._openid !== item._openid) || {}).displayName || '搭档'; const d = new Date(item.date); this.setData({ item, from, to, dateStr: d.toLocaleDateString(), timeStr: d.toLocaleTimeString(), creditPercent: Math.min(100, item.credit / this.data.maxCredit * 100) }) } catch (_) {} }
 })

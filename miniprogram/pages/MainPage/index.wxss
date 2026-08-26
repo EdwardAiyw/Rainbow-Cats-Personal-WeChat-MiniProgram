@@ -1,24 +1,9 @@
-.form-cell {
-  padding: 0;
-}
-
-.slide {
-  display: flex;
-  align-items: center;
-  padding: 10px;
-  position: relative;
-}
-
-.title {
-  font-size: 12px;
-}
-
-.swiper-image{
-  display: block;
-  height: 100%; 
-  width: 100%;
-  position: relative;
-  background-color: darkgray;
-  background-repeat: no-repeat;
-  background-size: contain;
-}
+.page { padding-top: 0; }
+.hero { position: relative; overflow: hidden; margin: -32rpx -28rpx 30rpx; padding: 86rpx 42rpx 62rpx; background: linear-gradient(135deg, #2d8cff 0%, #6a3cff 44%, #ff4e87 100%); }
+.hero::before { content: ''; position: absolute; top: -74rpx; right: -48rpx; width: 230rpx; height: 230rpx; border-radius: 50%; background: #ffdb4d; opacity: .9; }
+.hero::after { content: ''; position: absolute; right: 84rpx; bottom: -76rpx; width: 170rpx; height: 170rpx; border-radius: 50%; background: #55e5c7; opacity: .8; }
+.hero-title, .hero-subtitle, .eyebrow { position: relative; z-index: 1; }.eyebrow { color: #ffec83; }.hero-title { color: #fff; text-shadow: 0 4rpx 0 rgba(62,26,152,.18); }.hero-subtitle { color: #f2eaff; }
+.card { border-color: #e5dcff; }.heading { color: #5630d6; }.muted { color: #756d90; }.setup-card { margin-top: 28rpx; padding: 20rpx; border-radius: 18rpx; background: #e9fbf5; }.setup-title { margin-bottom: 14rpx; color: #16785c; font-size: 30rpx; font-weight: 800; }.setup-step { padding: 8rpx 0; color: #39705e; font-size: 24rpx; line-height: 1.55; }.status-card { border-color: #ffb940; background: #fff8df; }.status-title { color: #5630d6; }.status-message { color: #9e4b00; }
+.heading-with-action { display: flex; align-items: center; justify-content: space-between; }.name-edit { margin: 0; padding: 0 14rpx; color: #5630d6; border: 1rpx solid #d9ceff; border-radius: 999rpx; background: #f7f3ff; font-size: 22rpx; line-height: 1.8; }
+.name-editor { margin: -4rpx 0 16rpx; }.name-input { margin: 0; }.name-editor-actions { display: flex; justify-content: flex-end; gap: 16rpx; margin-top: 12rpx; }.name-cancel { background: #eef6ff; color: #39709b; }.name-save { background: #d9f8ec; color: #08785a; }
+.danger-button { margin-top: 20rpx; background: #fff0f2; color: #d84b62; border: 1rpx solid #ffc8d0; }

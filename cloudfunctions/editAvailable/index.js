@@ -8,12 +8,15 @@ const db = cloud.database()
 
 // 云函数入口函数
 exports.main = async (context) => {
-  // 根据待办 _id，获得并更新待办事项状态
-  return await db.collection(context.list).where({
-    _id: context._id
+  const openId = cloud.getWXContext().OPENID
+  if (context.list !== 'StorageList') return { error: '请使用专用业务云函数' }
+  const result = await db.collection('StorageList').where({
+    _id: context._id, _openid: openId
   }).update({
     data: {
       available: context.value
     }
   })
+  if (!result.stats.updated) return { error: '无权操作或记录不存在' }
+  return result
 }

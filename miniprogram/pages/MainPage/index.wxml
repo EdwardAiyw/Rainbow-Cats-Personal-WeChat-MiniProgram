@@ -1,38 +1,18 @@
-<view style="width:100%; background: none;">
-
-  <swiper indicator-dots="true" autoplay="true" interval="2000" duration="500" style="background: white; height: 200px; width: 100%;">
-      <swiper-item><image src="Images/HomeCover01.jpg" mode='widthFix' class="swiper-image" /></swiper-item>
-      <swiper-item><image src="Images/HomeCover02.jpg" mode='widthFix' class="swiper-image" /></swiper-item>
-      <swiper-item><image src="Images/HomeCover03.jpg" mode='widthFix' class="swiper-image" /></swiper-item>
-  </swiper>
-
-<view class="form-group_label">💰 积分榜</view>
-    <view class="form-group" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);">
-    <view class="form-cell">
-        <view class="slide">
-        <view class="title">{{userA}}的积分：{{creditA}}</view>
-        </view>
-    </view>
-    <view class="form-cell">
-        <view class="slide">
-        <view class="title">{{userB}}的积分：{{creditB}}</view>
-        </view>
-    </view>
-</view>
-
-<view class="form-group_label">🐻 欢迎回来</view>
-  <view class="form-group" style="box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.05), 0 6px 20px 0 rgba(0, 0, 0, 0.05);">
-    <view class="form-cell">
-      <view class="slide">
-        <view class="title">欢迎！蓝卡比和红卡比！</view>
-      </view>
-    </view>
-    <view class="form-cell">
-      <view class="slide">
-        <view class="title">今天想做什么呢？</view>
-      </view>
-    </view>
+<view class="page">
+  <view class="hero"><view class="eyebrow">{{copy.eyebrow}}</view><view class="hero-title">{{copy.heroTitle}}</view><view class="hero-subtitle">{{copy.heroSubtitle}}</view></view>
+  <view wx:if="{{!configured}}" class="card notice">{{copy.configure}}</view>
+  <view wx:elif="{{loading}}" class="card empty"><view class="icon">*</view><view class="title">{{copy.loading}}</view></view>
+  <view wx:elif="{{!space}}" class="card">
+    <view class="heading">{{copy.createTitle}}</view><view class="muted">{{copy.createHint}}</view>
+    <input type="text" cursor-spacing="20" maxlength="12" placeholder="{{namePlaceholder}}" placeholder-class="input-placeholder" bindinput="onNameInput" value="{{displayName}}" />
+    <button loading="{{submitting}}" disabled="{{submitting}}" bindtap="createSpace">{{copy.create}}</button>
+    <view wx:if="{{createCode}}" class="invite">{{copy.invite}}<text selectable="true">{{createCode}}</text></view>
+    <view class="divider">OR</view>
+    <input type="text" cursor-spacing="20" maxlength="12" placeholder="{{codePlaceholder}}" placeholder-class="input-placeholder" bindinput="onCodeInput" value="{{inviteCode}}" />
+    <button class="secondary" loading="{{submitting}}" disabled="{{submitting}}" bindtap="joinSpace">{{copy.join}}</button>
   </view>
-  <view bindtap="requestSubscribeMessage">接收服务通知</view>
-  
+  <block wx:else>
+    <view class="card"><view class="heading heading-with-action"><text>{{copy.points}}</text><button wx:if="{{!editingName}}" class="name-edit" size="mini" bindtap="editDisplayNameInline">修改昵称</button></view><view wx:if="{{editingName}}" class="name-editor"><input class="name-input" type="text" focus="{{nameInputFocus}}" cursor-spacing="24" maxlength="12" value="{{editingNameValue}}" bindinput="onEditingNameInput" bindconfirm="saveDisplayNameInline" confirm-type="done" /><view class="name-editor-actions"><button class="name-cancel" size="mini" bindtap="cancelEditDisplayNameInline">取消</button><button class="name-save" size="mini" bindtap="saveDisplayNameInline">保存</button></view></view><view wx:for="{{members}}" wx:key="_id" class="member-row"><text>{{item.displayName}}</text><text>{{item.credit}} {{copy.pointUnit}}</text></view></view>
+    <view class="card"><view class="heading">{{copy.connected}}</view><view class="invite"><text selectable="true">{{space.inviteCode}}</text></view><button class="secondary" bindtap="copyInviteCode">{{copy.copyCode}}</button><button wx:if="{{notificationConfigured}}" bindtap="requestSubscribeMessage">{{copy.notify}}</button><view wx:else class="notice">{{copy.notifyHint}}</view></view>
+  </block>
 </view>

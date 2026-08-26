@@ -1,83 +1,68 @@
-# 云开发情侣互动小程序（做任务，攒积分，换商品）
-## 序言
-这是使用云开发能力构建的情侣互动小程序，可以跟女朋友互动哦，其中使用了云开发基础能力的使用：
-- **数据库**：对文档型数据库进行读写和管理
-- **云函数**：在云端运行的代码，开发者只需编写业务逻辑代码
-## 使用逻辑
-打个比方:
-- 女朋友发布任务->女朋友来做任务->做完后由你来确认完成->女朋友收到积分
-- 你发布商品(洗碗券)->女朋友使用积分购买->商品进入到女朋友的库存->女朋友拿着洗碗券叫你洗碗->你洗碗->女朋友将物品(洗碗券)标记为已使用(不可逆)
-- 这样做的原因是 不想给任何一方能自说自话 增加自己或者对方积分的能力[点击完成任务的人不能是获得积分的人也不能是自己]
-## 版本新增
-- 将所有非云函数的云逻辑**封装为云函数**
-- 新增了**仓库系统**，购买了的商品会存入仓库，然后再被使用
-- 新增了**搜索框**，可以搜索物品和任务
-- 新增了**滑动窗**，可以自动播放显示多张图片
-- 新增了**商品和任务预设**，添加商品或任务可以使用预设，非常迅速
-- 将新增按钮变为可拖拽的**页面悬浮按钮**
-- 购买，上架，新建任务的**时间都会被记录**并显示
-- 取消了点击左边圆圈来完成或者购买，统一改为**左滑菜单**
-- 左滑菜单统一用**图标**显示，更加精简
-- 使用**特效升级**了详细信息页面与添加页面的美观度
-- 添加任务或物品界面积分文本框改为**滑块**
-- 在商城添加了**顶栏**显示积分，更直观
-- 使用**表情符号**简单的增加了美感
-## 效果图与动画
->![Image](Pics/Animation.gif)
->![Image](Pics/Main.jpg)
-## 部署方式
-- 在这里注册小程序开发者: https://mp.weixin.qq.com/cgi-bin/wx
-- 在这里登录开发者账号: https://mp.weixin.qq.com/
->![Image](Pics/Link.jpg)
-- 登录之后先在`主页`完成小程序`信息`和`类目`
-- 然后可以在`管理`中的`版本管理`与`成员管理`中发布小程序体验版并邀请对象使用
->![Image](Pics/Account.jpg)
-- 随后可以在`开发`中的`开发工具`里下载**微信开发者工具**
-- 打开微信开发工具->登录->导入我的文件夹-进入工具
-- 在左上角五个选项中选择`云开发`->按照提示开通云开发(这里可以选择免费的，不过限量，我开发用的多，6块够用了)
->![Image](Pics/DatabaseOption.jpg)
-- 进入后点击数据库->在集合名称添加四个集合：`MarketList`, `MissionList`, `StorageList`, `UserList`
-- 之前使用过上一个版本的，需要清空所有数据，因为字段结构不一样
->![Image](Pics/Database.jpg)
-- 在`UserList`中添加两个默认记录, 在两个记录中分别添加两个字段:
-```
-字段 = _openid | 类型 = string | 值 = 先不填
-字段 = credit | 类型 = number | 值 = 0
-```
-- 打开云开发的控制台的`概览`选项->复制环境ID
-- 打开 `miniprogram/envList.js` 将内容全部替换成如下，注意替换环境ID
-```js
-module.exports = {
-  envList: [{
-    envId:'上述步骤中你获得的环境ID (保留单引号)'
-  }]
-}
-```
-- 右键点击 `cloudfunctions` 中的每个文件夹并选择云函数云端安装依赖上传 (有点麻烦但是这是一定要做的)
->![Image](Pics/CloudFunction.jpg)
-- 如果云开发里面的云函数页面是这样的就是成功了
->![Image](Pics/CloudFunctionList.jpg)
+# 我们的日常空间
 
-- 没有安装npm或者NodeJs, 需要先在这里安装: https://nodejs.org/dist/v16.15.1/node-v16.15.1-x64.msi
-- 安装好的，就直接运行`cloudfunctions/Install-WX-Server-SDK.bat` 
-- 不成功的话可以在命令行输入 `npm install --save wx-server-sdk@latest`
-- 然后创建体验版小程序->通过开发者账号分享到女朋友手机上(要先登录小程序开发者账号)
-- 在两个手机上运行小程序->分别在两个手机上的小程序里新建任务
-- 然后回到云开发控制台的`missionlist`数据库集合->找自己和女朋友的`_openid`变量并记录
-- 把这两个记录下来的`_openid`拷贝到云开发控制台`UserList`数据集合里刚刚没填的`_openid`变量中
-- 把这两个记录下来的`_openid`拷贝到`miniprogram/app.js`里的`_openidA`和`_openidB`的值里(A是卡比，B是瓦豆)
-- 在`miniprogram/app.js`里把`userA`和`userB`改成自己和女朋友的名字
-- 然后再试试看是不是成功了! (别忘了任务和物品**左滑**可以完成和购买)
-- 消息提醒功能：
-- 参考https://blog.csdn.net/hell_orld/article/details/110675777?ops_request_misc=%257B%2522request%255Fid%2522%253A%2522168490366016800180699170%2522%252C%2522scm%2522%253A%252220140713.130102334..%2522%257D&request_id=168490366016800180699170&biz_id=0&utm_medium=distribute.pc_search_result.none-task-blog-2~all~sobaiduend~default-2-110675777-null-null.142^v87^insert_down28v1,239^v2^insert_chatgpt&utm_term=%E5%BE%AE%E4%BF%A1%E5%B0%8F%E7%A8%8B%E5%BA%8F%E9%80%9A%E7%9F%A5%E4%BA%91%E5%BC%80%E5%8F%91&spm=1018.2226.3001.4187配置自己想要的模板
-- 在`miniprogram/pages/MainPage/index.js`和`miniprogram/pages/MissionAdd/index.js`里把模板号换成自己想要的模板号
-- 在`cloudfunctions/information/index.js`里把UserA和UserB的openid值进行修改就能使用消息提醒功能了
->![Image](Pics/information.jpg)
-- 别忘了最后点击右上角上传->然后在开发者账号上设置小程序为**体验版**->不用去发布去审核
->![Image](Pics/UploadOption.jpg)
-- 最后如果有兴趣可以继续深入开发, 开发文档: https://developers.weixin.qq.com/miniprogram/dev/component/
-## 旧版效果图
->![Image](Pics/Previous.jpg)
-## 声明
-- 小程序内所有图片均来自网络，此项目非商用，侵删。
-- 若想使用此项目为商用，请先告知我，谢谢。
+情侣双人小程序：共同创建心愿、完成任务、赚取积分、兑换礼物并保存使用记录。
+
+## 第一次运行
+
+1. 使用微信开发者工具打开项目根目录。
+2. 打开 `miniprogram/config.js`，确认 `envId` 是云开发环境 ID：
+
+   ```js
+   envId: 'cloud1-2gc6ss1ca2b8db52'
+   ```
+
+   这里填写的是“云开发 → 环境设置”中的环境 ID，不是小程序 AppID。
+3. 点击开发者工具顶部“云开发”，切换到同一个环境。
+4. 在云开发数据库中创建以下集合（权限建议先使用“仅管理员可读写”，由云函数访问）：
+   - `Spaces`
+   - `Memberships`
+   - `MissionList`
+   - `MarketList`
+   - `StorageList`
+   - `RecipeList`
+   - `ApiUsage`
+5. 将 `cloudfunctions` 下这些文件夹逐个右键，选择“上传并部署：云端安装依赖”：
+   `createSpace`、`joinSpace`、`getCurrentSpace`、`addElement`、`listElements`、`getElementById`、`completeMission`、`purchaseItem`、`useStorageItem`、`editStar`、`deleteElement`、`updateDisplayName`、`deleteMembership`、`information`、`recipeApi`。
+6. 重新编译小程序，在“空间”页输入昵称并创建空间。
+
+## 两人使用流程
+
+创建者：空间 → 输入昵称 → 创建空间 → 复制邀请码。
+
+另一位用户：空间 → 输入昵称和邀请码 → 加入空间。
+
+之后可以按这个顺序测试：
+
+1. “心愿” → `+` → 创建一个心愿。
+2. 另一位用户在心愿列表点击“完成”，创建者获得对应积分。
+3. “礼物” → `+` → 上架一份礼物并设置积分。
+4. 对方使用积分点击“兑换”，礼物会进入“收藏”。
+5. “收藏”中点击“使用”，即可记录礼物已使用。
+6. “菜谱”中可以维护双人菜谱库，也可以搜索 TianAPI 官方菜谱并点击“随机一道菜”解决不知道吃什么的问题。
+
+## 常见问题
+
+- 页面提示“请先配置云环境”：检查 `config.js` 的 `envId` 是否为空，并重新编译。
+- 创建空间没有反应：确认 `createSpace` 已部署，且数据库包含 `Spaces`、`Memberships`。
+- 列表加载失败：确认对应云函数已部署，并检查云开发控制台的函数日志。
+- 兑换失败：确认双方在同一个空间，且购买者积分不少于礼物价格。
+- 菜谱保存或加载失败：确认已创建 `RecipeList`、`ApiUsage` 集合，并重新部署 `addElement`、`listElements`、`getElementById`、`editStar`、`deleteElement`、`deleteMembership`、`recipeApi`。
+
+`maxCredit` 默认为 500；`notificationTemplateId` 可选，用于任务订阅提醒。
+
+订阅提醒：从微信后台取得模板 ID 后，同时填写 `miniprogram/config.js`、`cloudfunctions/information/notification.config.js` 和 `cloudfunctions/addElement/notification.config.js`，并重新部署 `information`、`addElement`。创建心愿会先保存数据，通知失败不会阻断保存。
+
+昵称修改：部署 `cloudfunctions/updateDisplayName` 后，首页“我们的积分”卡片右上角的“修改昵称”可以更新当前用户昵称；更新通过云函数写入 `Memberships.displayName`。
+
+成员资料删除：部署 `cloudfunctions/deleteMembership` 后，可从设置页删除当前用户的成员资料并退出当前空间；相关数据清理规则见下方“用户删除”说明。
+
+用户删除：删除入口位于“收藏”页面右上角的“设置”。部署 `deleteMembership` 后，删除会同时清理当前用户的 `Memberships`、`MissionList`、`MarketList`、`StorageList` 和 `RecipeList` 中属于当前空间的数据，并从 `Spaces.memberOpenIds` 移除当前用户；该操作不可恢复，相关历史记录不会保留。
+
+TianAPI 菜谱：`recipeApi` 云函数会读取云函数环境变量 `TIANAPI_KEY`。不要把 key 写入小程序前端或提交到仓库；在微信云开发控制台为 `recipeApi` 配置环境变量后，重新部署该云函数。为避免免费额度被刷完，`recipeApi` 会通过 `ApiUsage` 集合按天记录 TianAPI 菜谱请求次数，当天达到 95 次后停止请求官方接口，并提示“那就吃我吧”。
+继续配置和 OpenClaw 对接请阅读 [OPENCLAW_INTEGRATION.md](OPENCLAW_INTEGRATION.md)。
+
+OpenClaw 业务入口：`cloudfunctions/openclawApi` 是受保护的服务端调用入口，当前支持 `listMissions`、`listMarket`、`listStorage`、`createMission`、`completeMission` 和 `purchaseGift`。部署后必须在云函数环境变量中配置 `OPENCLAW_API_TOKEN` 与 JSON 格式的 `OPENCLAW_ACTOR_MAP`（例如 `{"main":"微信用户 openId"}`）；不要将这些值写入仓库。所有操作仍在云函数中校验空间成员身份并执行事务。
+
+## HTML 原型与小程序页面
+
+`prototype/` 保存浏览器端 HTML 视觉原型，使用脱敏 mock 数据，仅用于确认布局、文案和交互。原型定稿后，页面结构转换为 WXML，样式转换为 WXSS，交互转换为小程序 JavaScript；主业务页面不使用 `web-view`，仍通过 `miniprogram/utils/cloud.js` 调用云函数。打开 `prototype/index.html` 即可查看首页原型，其他页面位于 `prototype/pages/`。

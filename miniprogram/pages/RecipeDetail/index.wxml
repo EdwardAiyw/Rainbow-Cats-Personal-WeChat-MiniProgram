@@ -1,0 +1,13 @@
+<view class="container" wx:if="{{recipe}}">
+  <view class="page-heading">{{copy.pageTitle}}</view>
+  <view class="card"><view class="detail-label">{{copy.title}}</view><view class="detail-value">{{recipe.title}}</view><view class="muted">{{recipe.desc || '-'}}</view></view>
+  <view class="card"><view class="detail-label">{{copy.profile}}</view><view class="detail-value">{{recipe.cuisine}} · {{recipe.flavor}} · {{recipe.difficulty}} · {{recipe.displayMinutes}}</view></view>
+  <view class="card"><view class="detail-label">{{copy.ingredients}}</view><view class="detail-value">{{recipe.ingredients || '-'}}</view></view>
+  <view wx:if="{{recipe.seasoning}}" class="card"><view class="detail-label">{{copy.seasoning}}</view><view class="detail-value multiline">{{recipe.seasoning}}</view></view>
+  <view class="card"><view class="detail-label">{{copy.steps}}</view><view class="detail-value multiline">{{recipe.steps || '-'}}</view></view>
+  <view wx:if="{{recipe.feature}}" class="card"><view class="detail-label">{{copy.feature}}</view><view class="detail-value multiline">{{recipe.feature}}</view></view>
+  <view wx:if="{{recipe.tip}}" class="card"><view class="detail-label">{{copy.tip}}</view><view class="detail-value multiline">{{recipe.tip}}</view></view>
+  <view class="card"><view class="detail-label">{{copy.author}}</view><view class="detail-value">{{author}}</view></view>
+  <view class="card"><view class="detail-label">{{copy.createdAt}}</view><view class="detail-value">{{dateStr}} {{timeStr}}</view></view>
+</view>
+<view wx:else class="container empty"><view class="title">{{errorText || copy.notFound}}</view></view>

@@ -1,0 +1,66 @@
+<view class="page recipe-page">
+  <view class="page-heading">{{l.title}}</view>
+  <view wx:if="{{loading}}" class="card empty"><view class="icon">*</view><view class="title">{{l.loading}}</view></view>
+  <view wx:elif="{{errorText}}" class="card status-card"><view class="status-title">{{l.errorTitle}}</view><view class="status-message">{{errorText}}</view><button bindtap="retry">{{l.retry}}</button></view>
+  <view wx:elif="{{!hasSpace}}" class="card status-card"><view class="status-title">{{l.noSpaceTitle}}</view><view class="status-message">{{l.noSpaceHint}}</view><button bindtap="openSpace">{{l.goSpace}}</button></view>
+  <block wx:else>
+    <view class="card random-card" bindtap="openRandomDetail">
+      <view class="random-meta">
+        <image class="random-icon" src="../../images/TabBar/recipe-active.png" mode="aspectFit" />
+        <text>江西菜 * 家常菜</text>
+      </view>
+      <view wx:if="{{randomRecipe}}" class="random-title">{{randomRecipe.title}}</view>
+      <view wx:else class="random-title">不知道今天吃什么？</view>
+      <view wx:if="{{randomRecipe}}" class="random-desc">{{randomRecipe.flavor}} · {{randomRecipe.difficulty}} · {{randomRecipe.displayMinutes}}</view>
+      <view wx:else class="random-desc">点一下，随机一道适合今天的菜。</view>
+      <button catchtap="randomPick">{{apiLoading ? '...' : l.random}}</button>
+    </view>
+
+    <view class="recipe-toolbar">
+      <view class="recipe-toolbar_copy">继续加菜，菜单会越来越像你们自己的口味。</view>
+      <button class="recipe-toolbar_add" bindtap="toAddPage">+ {{l.add}}</button>
+    </view>
+
+    <view class="recipe-search">
+      <view class="form-group search-bar"><input class="search-input" type="text" cursor-spacing="20" confirm-type="search" placeholder="{{l.search}}" bindinput="onSearch" bindconfirm="onSearchConfirm" value="{{search}}" /></view>
+      <button class="search-button" bindtap="searchApi">{{apiLoading ? '...' : l.searchApi}}</button>
+    </view>
+
+    <view wx:if="{{apiError}}" class="notice">{{apiError}}</view>
+
+    <view class="section-title"><text>{{l.apiRecipes}}</text><text>{{apiRecipes.length}}</text></view>
+    <view wx:for="{{apiRecipes}}" wx:key="_id" class="card slide" data-index="{{index}}" bindtap="toApiDetail">
+      <view class="item-info">
+        <view class="item-info_title">{{item.title}}</view>
+        <view class="item-info_award">{{item.flavor}} · {{item.displayMinutes}}</view>
+        <view class="item-info_date">{{item.desc}}</view>
+      </view>
+      <view class="recipe-badge official">{{l.official}}</view>
+    </view>
+
+    <view class="section-title"><text>{{l.myRecipes}}</text><text>{{myRecipes.length}}</text></view>
+    <view wx:if="{{myRecipes.length === 0}}" class="card empty compact"><view class="title">{{l.empty}}</view></view>
+    <view wx:for="{{myRecipes}}" wx:key="_id" class="card slide" data-index="{{index}}" bindtap="toLocalDetail">
+      <view class="item-info">
+        <view class="item-info_title">{{item.title}}</view>
+        <view class="item-info_award">{{item.flavor}} · {{item.difficulty}} · {{item.displayMinutes}}</view>
+        <view class="item-info_date">{{item.desc}}</view>
+      </view>
+      <view class="recipe-badge custom">{{l.custom}}</view>
+      <view wx:if="{{item.canManage}}" class="item-actions">
+        <button size="mini" class="secondary" data-id="{{item._id}}" catchtap="toggleStar">{{item.star ? '*' : '+'}}</button>
+        <button size="mini" class="secondary" data-id="{{item._id}}" catchtap="deleteRecipe">{{l.delete}}</button>
+      </view>
+    </view>
+
+    <view class="section-title"><text>{{l.presetRecipes}}</text><text>{{presetRecipes.length}}</text></view>
+    <view wx:for="{{presetRecipes}}" wx:key="_id" class="card slide" data-index="{{index}}" bindtap="toPresetDetail">
+      <view class="item-info">
+        <view class="item-info_title">{{item.title}}</view>
+        <view class="item-info_award">{{item.flavor}} · {{item.difficulty}} · {{item.displayMinutes}}</view>
+        <view class="item-info_date">{{item.desc}}</view>
+      </view>
+      <view class="recipe-badge preset">{{l.preset}}</view>
+    </view>
+  </block>
+</view>
