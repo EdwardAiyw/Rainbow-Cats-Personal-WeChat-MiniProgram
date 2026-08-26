@@ -59,9 +59,6 @@
 用户删除：删除入口位于“收藏”页面右上角的“设置”。部署 `deleteMembership` 后，删除会同时清理当前用户的 `Memberships`、`MissionList`、`MarketList`、`StorageList` 和 `RecipeList` 中属于当前空间的数据，并从 `Spaces.memberOpenIds` 移除当前用户；该操作不可恢复，相关历史记录不会保留。
 
 TianAPI 菜谱：`recipeApi` 云函数会读取云函数环境变量 `TIANAPI_KEY`。不要把 key 写入小程序前端或提交到仓库；在微信云开发控制台为 `recipeApi` 配置环境变量后，重新部署该云函数。为避免免费额度被刷完，`recipeApi` 会通过 `ApiUsage` 集合按天记录 TianAPI 菜谱请求次数，当天达到 95 次后停止请求官方接口，并提示“那就吃我吧”。
-继续配置和 OpenClaw 对接请阅读 [OPENCLAW_INTEGRATION.md](OPENCLAW_INTEGRATION.md)。
-
-OpenClaw 业务入口：`cloudfunctions/openclawApi` 是受保护的服务端调用入口，当前支持 `listMissions`、`listMarket`、`listStorage`、`createMission`、`completeMission` 和 `purchaseGift`。部署后必须在云函数环境变量中配置 `OPENCLAW_API_TOKEN` 与 JSON 格式的 `OPENCLAW_ACTOR_MAP`（例如 `{"main":"微信用户 openId"}`）；不要将这些值写入仓库。所有操作仍在云函数中校验空间成员身份并执行事务。
 
 ## HTML 原型与小程序页面
 
