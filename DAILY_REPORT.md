@@ -6,30 +6,32 @@
 
 ### 今日主线
 
-- 菜谱功能上线前验收：完成云端配置、部署 `recipeApi`，并使用真实 TianAPI key 完整验证官方菜谱链路。
-- 旧的订阅消息和 iPhone 真机问题暂缓，后续单独处理。
+- 收敛菜谱功能和 OpenClaw 第一批业务能力，并整理项目交接资料。
+- 将当前项目改动同步到 GitHub，确保后续云端部署和联调基于同一版本。
 
 ### 已完成
 
-- 完成本地预检：菜谱相关 JSON 配置解析通过。
-- 完成本地预检：`cloudfunctions/recipeApi/index.js`、菜谱三页 JS 语法检查通过。
-- 完成本地预检：67 个业务 JS 文件语法检查通过。
-- 完成 `recipeApi` 本地无密钥调用检查，返回 `{"error":"未配置 TIANAPI_KEY"}`，符合预期。
+- 新增并整理 `cloudfunctions/openclawApi`，支持查询/创建/完成心愿、查询/兑换礼物和查询收藏；使用 `actorId` 映射微信 `openId`，完成和兑换操作使用事务。
+- 完成 OpenClaw 云函数 Node 语法检查。
+- 完成本地项目预检：70 个业务 JavaScript 文件语法检查通过，86 个 JSON 文件可解析。
+- 保持密钥和个人配置不进入提交；`project.private.config.json` 未同步到仓库。
+- 创建 Git 提交 `8127bd4`，并成功推送到 GitHub `main` 分支。
 
 ### 当前待办
 
-- [ ] 在微信云开发数据库创建 `ApiUsage` 集合。
-- [ ] 确认 `RecipeList` 集合已创建。
-- [ ] 在微信云开发控制台为 `recipeApi` 配置环境变量 `TIANAPI_KEY`。
-- [ ] 重新上传部署 `cloudfunctions/recipeApi`，选择“上传并部署：云端安装依赖”。
+- [ ] 在微信云开发数据库创建 `ApiUsage` 集合，并确认 `RecipeList` 集合已创建。
+- [ ] 在微信云开发控制台为 `recipeApi` 配置 `TIANAPI_KEY`，重新部署 `recipeApi` 并完成官方菜谱云端验证。
+- [ ] 在微信云开发控制台为 `openclawApi` 配置 `OPENCLAW_API_TOKEN` 和 `OPENCLAW_ACTOR_MAP`，再部署云函数。
 - [ ] 重新编译小程序，进入菜谱页测试官方菜谱搜索、随机一道菜和详情页。
 - [ ] 手动设置当天 `ApiUsage` 文档计数到 95，验证第 96 次请求提示“那就吃我吧”，并确认不再请求 TianAPI。
 - [ ] 在微信开发者工具和至少一台真机上完整走一遍菜谱功能。
-- [ ] 根据测试结果修复菜谱相关 UI 或云函数问题，确认是否可以进入正式使用。
+- [ ] 完成订阅消息双账号验收，并继续排查 iPhone 心愿页请求失败问题。
 
-### 明日计划
+### 明日计划（2026-08-27）
 
-- 根据今天云端和真机验收结果决定：如果菜谱功能通过，则回到订阅消息和 iPhone 真机问题；如果未通过，则继续收敛菜谱问题。
+1. 优先完成 `ApiUsage`、`RecipeList` 和 `recipeApi` 的云端配置与部署。
+2. 配置并部署 `openclawApi`，先验证受保护调用和 actor 映射。
+3. 在微信开发者工具及真机上验收菜谱功能；通过后回到订阅消息和 iPhone 问题。
 
 ## 2026-08-25
 
